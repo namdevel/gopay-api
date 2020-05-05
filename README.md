@@ -5,7 +5,7 @@
 [![PHP Libraries](https://badgen.net/badge/icon/libraries?icon=libraries&label)](https://github.com/namdevel/GojekPay)
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/namdevel/GojekPay)
 
-Compliant with the April 30, 2020 OVO API update.
+Compliant with the May 05, 2020 Gojek API update.
 
 Features
 ------------
