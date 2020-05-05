@@ -1,6 +1,11 @@
 <?php
 namespace Namdevel;
-
+/**
+ * [Gojek] Gopay Api PHP Class (Un-Official)
+ * Author : namdevel <https://github.com/namdevel>
+ * Created at 22-04-2020 14:26
+ * Last Modified at 05-05-2020 18:26
+ */
 class GojekPay
 {
     const ApiUrl = 'https://goid.gojekapi.com';
