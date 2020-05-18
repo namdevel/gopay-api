@@ -4,6 +4,7 @@
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 [![PHP Libraries](https://badgen.net/badge/icon/libraries?icon=libraries&label)](https://github.com/namdevel/gopay-api)
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/namdevel/gopay-api)
+[![HitCount](http://hits.dwyl.com/namdevel/gopay-api.svg)](http://hits.dwyl.com/namdevel/gopay-api)
 
 Compliant with the May 05, 2020 Gojek API update.
 
