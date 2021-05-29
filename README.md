@@ -4,7 +4,7 @@
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 [![PHP Libraries](https://badgen.net/badge/icon/libraries?icon=libraries&label)](https://github.com/namdevel/gopay-api)
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/namdevel/gopay-api)
-[![HitCount](http://hits.dwyl.com/namdevel/gopay-api.svg)](http://hits.dwyl.com/namdevel/gopay-api)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fnamdevel%2Fgopay-api&count_bg=%23EF5503&title_bg=%23555555&icon=protocols-dot-io.svg&icon_color=%23E7E7E7&title=VIEWS&edge_flat=true)](https://hits.seeyoufarm.com)
 
 Compliant with the May 05, 2020 Gojek API update.
 
