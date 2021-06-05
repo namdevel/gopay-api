@@ -6,13 +6,28 @@ use Namdevel\GojekPay;
 $access_token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.....';
 $gopay = new GojekPay($access_token);
 
-echo $gopay->getProfile();
-echo $gopay->isGojek('<phoneNumber>');
-echo $gopay->getBankList();
-echo $gopay->getHistory();
-echo $gopay->isBank('<bankCode>', '<bank_account_number>');
-echo $gopay->getBankAccountName('<bankCode>', '<bank_account_number>');
+echo $gopay->getTransactionHistory();
+
 echo $gopay->getBalance();
-echo $gopay->transferGopay('<phoneNumber>', '<amount>', '<pin>');
-echo $gopay->getQrid('<phoneNumber>');
-echo $gopay->transferBank('<bankCode>', '<bank_account_number>', '<amount>', '<pin>');
+
+echo $gopay->getProfile();
+
+echo $gopay->goClubMembership();
+
+echo $gopay->paylaterProfile();
+
+echo $gopay->kycStatus();
+
+echo $gopay->isGojek('<+628xxxxxxxxxx>'); // include +62
+
+echo $gopay->getQrid('+628xxxxxxxxxx'); // include +62
+
+echo $gopay->getBankList(); // get bank code
+
+echo $gopay->isBank('<bankcode: bri/bca/mandiri/btpn>', '<nomor_rekening>');
+
+echo $gopay->transferGopay('<+628xxxxxxxxxx>', 10000, '<pin_gopay>'); // include +62
+
+echo $gopay->transferBank('<bri/bca/mandiri/btpn>', '<nomor_rekening>', 10000, '<pin_gopay>');
+
+echo $gopay->transferBankDetail('<request_id>');
