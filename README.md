@@ -6,7 +6,7 @@
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/namdevel/gopay-api)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fnamdevel%2Fgopay-api&count_bg=%23EF5503&title_bg=%23555555&icon=protocols-dot-io.svg&icon_color=%23E7E7E7&title=VIEWS&edge_flat=true)](https://hits.seeyoufarm.com)
 
-Compliant with the May 05, 2020 Gojek API update.
+Compliant with the june 06, 2021 Gojek API update.
 
 Features
 ------------
@@ -19,9 +19,12 @@ Features
 - [x] getAccountBalance
 - [x] getQrid
 - [x] getBankList
-- [x] getBankAccountName
+- [x] kycStatus
 - [x] isGojek
 - [x] isBank
+- [x] paylaterProfile
+- [x] transferBankDetail
+- [x] goClub Membership
 
 License
 ------------
