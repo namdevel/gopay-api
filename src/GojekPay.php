@@ -4,138 +4,44 @@ namespace Namdevel;
  * [Gojek] Gopay Api PHP Class (Un-Official)
  * Author : namdevel <https://github.com/namdevel>
  * Created at 22-04-2020 14:26
- * Last Modified at 05-05-2020 18:26
+ * Last Modified at 06-06-2021 02:37
  */
 class GojekPay
 {
-    const ApiUrl = 'https://goid.gojekapi.com';
-    const Api2Url = 'https://api.gojekapi.com';
-    const appId = 'com.go-jek.ios';
-    const phoneModel = 'Apple, iPhone11,6';
-    const phoneMake = 'Apple';
-    const osDevice = 'iOS, 13.3.1';
-    const xPlatform = 'iOS';
-    const appVersion = '3.51';
+    const API_URL = 'https://api.gojekapi.com';
+    const API_GOID = 'https://goid.gojekapi.com';
+    const API_CUSTOMER = 'https://customer.gopayapi.com';
     const clientId = 'gojek:consumer:app';
     const clientSecret = 'pGwQ7oi8bKqqwvid09UrjqpkMEHklb';
-    const userAgent = 'Gojek/3.51 (com.go-jek.ios; build:6890866; iOS 13.3.1) Alamofire/3.51';
+    const appId = 'com.go-jek.ios';
+    const phoneModel = 'Apple, iPhone XS Max';
+    const phoneMake = 'Apple';
+    const osDevice = 'iOS, 14.4.2';
+    const xPlatform = 'iOS';
+    const appVersion = '4.20.1';
+    const gojekCountryCode = 'ID';
+    const userAgent = 'Gojek/4.20.1 (com.go-jek.ios; build:15832942; iOS 14.4.2) Alamofire/4.20.1';
 
-    private $authToken;
-    private $pin;
-    private $sessionId;
-    private $uniqueId;
-    
-    public function __construct($token = false)
+    private $authToken, $uniqueId, $sessionId, $pin, $idKey;
+
+    public function __construct($authToken = false)
     {
-        $this->sessionId = '78EB815C-6AE5-4969-A6B1-BE5EC893F7AA'; // generated from self::uuidv4();
-        $this->uniqueId = '5C816FEA-D93E-4910-B672-978FCFA992F2'; // generated from self::uuidv4();
-        
-        if ($token) {
-            $this->authToken = $token;
+        $this->sessionId = 'A78354AB-9578-4FF5-B899-4BA6BA16488E'; // generated from self::uuidv4();
+        $this->uniqueId = 'A23194EB-8C6F-45B7-8A80-2606BA847DD8'; // generated from self::uuidv4();
+        if ($authToken)
+        {
+            $this->authToken = $authToken;
         }
     }
-    
-    public function uuidv4()
-    {
-        $data    = random_bytes(16);
-        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
-        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
-        return strtoupper(vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4)));
-    }
-    
-    public function transferBank($bankCode, $bankNumber, $amount, $pin)
-    {
-        $bankAccountName = self::getBankAccountName($bankCode, $bankNumber);
-        $payload = array(
-            'bank_code' => $bankCode,
-            'bank_account_number' => $bankNumber,
-            'amount' => $amount,
-            'bank_account_name' => $bankAccountName
-        );
-        self::setPin($pin);
-        return self::Request(self::Api2Url . '/v3/wallet/withdrawal/request', $payload, self::buildHeaders());
-    }
 
-    public function transferGopay($phoneNumber, $amount, $pin)
-    {
-        self::setPin($pin);
-        $payload = array(
-            'qr_id' => self::getQrid($phoneNumber) ,
-            'amount' => $amount,
-            'description' => '💰'
-        );
-
-        return self::Request(self::Api2Url . '/v2/fund/transfer', $payload, self::buildHeaders());
-    }
-
-    public function getQrid($phoneNumber)
-    {
-        return self::getResponse(self::isGojek($phoneNumber), 'qr_id');
-    }
-
-    public function getBankAccountName($bankCode, $bankNumber)
-    {
-        return self::getResponse(self::isBank($bankCode, $bankNumber), 'bank_account_name');
-    }
-
-    protected function setPin($pin)
+    protected function setPinGojek($pin)
     {
         $this->pin = $pin;
     }
 
-    public function getRealAmount($amount)
+    protected function setIdKey()
     {
-        return self::getResponse(self::Request(self::Api2Url . '/wallet/withdrawal/request?amount=' . $amount, false, self::buildHeaders()), 'total_amount');
-    }
-
-    public function getBankList()
-    {
-        return self::Request(self::Api2Url . '/v1/withdrawal/banks', false, self::buildHeaders());
-    }
-
-    public function getHistory($page = 1, $limit = 20)
-    {
-        return self::Request(self::Api2Url . "/wallet/history?page={$page}&limit={$limit}", false, self::buildHeaders());
-    }
-
-    public function getProfile()
-    {
-        return self::Request(self::Api2Url . '/gojek/v2/customer', false, self::buildHeaders());
-    }
-
-    public function getBalance()
-    {
-        return self::Request(self::Api2Url . '/wallet/profile', false, self::buildHeaders());
-    }
-
-    public function isGojek($phoneNumber)
-    {
-        return self::Request(self::Api2Url . '/wallet/qr-code?phone_number=' . urlencode($phoneNumber), false, self::buildHeaders());
-    }
-
-    public function getAuthToken($otpToken, $otpCode)
-    {
-        $payload = array(
-            'data' => array(
-                'otp_token' => $otpToken,
-                'otp' => $otpCode
-            ) ,
-            'client_id' => self::clientId,
-            'grant_type' => 'otp',
-            'client_secret' => self::clientSecret
-        );
-
-        return self::Request(self::ApiUrl . '/goid/token', $payload, self::buildHeaders());
-    }
-
-    public function isBank($bankCode, $bankNumber)
-    {
-        $payload = array(
-            'bank_code' => $bankCode,
-            'bank_account_number' => $bankNumber
-        );
-
-        return self::Request(self::Api2Url . '/v1/withdrawal/account/validate', $payload, self::buildHeaders());
+        $this->idKey = self::uuidv4();
     }
 
     public function loginRequest($phoneNumber)
@@ -144,10 +50,130 @@ class GojekPay
             'client_id' => self::clientId,
             'client_secret' => self::clientSecret,
             'country_code' => '+62',
-            'phone_number' => $phoneNumber
+            'magic_link_ref' => null,
+            'phone_number' => self::formatPhone($phoneNumber)
+        );
+        return self::Request(self::API_GOID . '/goid/login/request', $payload, true);
+    }
+
+    public function getAuthToken($otpToken, $otpCode)
+    {
+        $payload = array(
+            'client_id' => self::clientId,
+            'client_secret' => self::clientSecret,
+            'data' => array(
+                'otp_token' => $otpToken,
+                'otp' => $otpCode
+            ) ,
+            'grant_type' => 'otp'
         );
 
-        return self::Request(self::ApiUrl . '/goid/login/request', $payload, self::buildHeaders());
+        return self::Request(self::API_GOID . '/goid/token', $payload, true);
+    }
+
+    public function getTransactionHistory($page = 1, $limit = 20)
+    {
+        return self::Request(self::API_CUSTOMER . "/v1/users/transaction-history?page={$page}&limit={$limit}", false, true);
+    }
+
+    public function getBalance()
+    {
+        return self::Request(self::API_CUSTOMER . "/v1/payment-options/balances", false, true);
+    }
+
+    public function getProfile()
+    {
+        return self::Request(self::API_URL . "/gojek/v2/customer", false, true);
+    }
+
+    public function goClubMembership()
+    {
+        return self::Request(self::API_URL . "/goclub/v1/membership", false, true);
+    }
+
+    public function paylaterProfile()
+    {
+        return self::Request(self::API_URL . "/paylater/v1/user/profile", false, true);
+    }
+
+    public function kycStatus()
+    {
+        return self::Request(self::API_CUSTOMER . "/v1/users/kyc/status", false, true);
+    }
+
+    public function isGojek($phoneNumber)
+    {
+        return self::Request(self::API_CUSTOMER . "/v1/users/p2p-profile?phone_number=" . urlencode($phoneNumber) . "", false, true);
+    }
+
+    public function getQrid($phoneNumber)
+    {
+        return self::getResponse(self::isGojek($phoneNumber) , 'qr_id');
+    }
+
+    public function transferGopay($phoneNumber, $amount, $pin)
+    {
+        self::setPinGojek($pin);
+        $payload = array(
+            'amount' => array(
+                'currency' => 'IDR',
+                'value' => $amount
+            ) ,
+            'description' => '💰',
+            'metadata' => array(
+                'post_visibility' => 'NO_SOCIAL',
+                'theme_id' => 'THEME_CLASSIC'
+            ) ,
+            'payee' => array(
+                'id' => self::getQrid($phoneNumber) ,
+                'id_type' => 'GOPAY_QR_ID'
+            )
+        );
+        return self::Request(self::API_CUSTOMER . '/v1/funds/transfer', $payload, true);
+    }
+
+    public function getBankList()
+    {
+        return self::Request(self::API_CUSTOMER . "/v1/banks?type=transfer&show_withdrawal_block_status=false", false, true);
+    }
+
+    public function transferBank($bankCode, $bankNumber, $amount, $pin)
+    {
+        self::setIdKey();
+        $bankAccountName = self::getResponse(self::isBank($bankCode, $bankNumber) , 'account_name');
+        $payload = array(
+            'account_name' => "$bankAccountName",
+            'account_number' => "$bankNumber",
+            'amount' => "$amount",
+            'bank_code' => "$bankCode",
+            'currency' => 'IDR',
+            'pin' => "$pin",
+            'type' => 'transfer'
+        );
+        return self::Request(self::API_CUSTOMER . '/v1/withdrawals', $payload, true);
+    }
+
+    public function transferBankDetail($requestId)
+    {
+        return self::Request(self::API_CUSTOMER . "/v1/withdrawals/detail?request_id={$requestId}", false, true);
+    }
+
+    public function isBank($bankCode, $bankNumber)
+    {
+        return self::Request(self::API_CUSTOMER . "/v1/bank-accounts/validate?bank_code={$bankCode}&account_number={$bankNumber}", false, true);
+    }
+
+    protected function formatPhone($phoneNumber, $areacode = '')
+    {
+        return substr_replace($phoneNumber, $areacode, 0, 1);
+    }
+
+    public function uuidv4()
+    {
+        $data = random_bytes(16);
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+        return strtoupper(vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data) , 4)));
     }
 
     protected function buildHeaders()
@@ -162,18 +188,34 @@ class GojekPay
             'x-deviceos: ' . self::osDevice,
             'x-platform: ' . self::xPlatform,
             'x-appversion: ' . self::appVersion,
+            'Gojek-Country-Code: ' . self::gojekCountryCode,
             'accept: */*',
             'content-type: application/json',
             'x-user-type: customer'
         );
 
-        if (!empty($this->authToken)) {
+        if (!empty($this->authToken))
+        {
             array_push($headers, 'Authorization: Bearer ' . $this->authToken);
         }
-        if (!empty($this->pin)) {
+
+        if (!empty($this->pin))
+        {
             array_push($headers, 'pin: ' . $this->pin);
         }
+
+        if (!empty($this->idKey))
+        {
+            array_push($headers, 'Idempotency-Key: ' . $this->idKey);
+        }
+
         return $headers;
+    }
+
+    public function getResponse($response, $key)
+    {
+        $json = json_decode($response, true);
+        return $json['data'][$key];
     }
 
     protected function Request($url, $post = false, $headers = false)
@@ -185,23 +227,20 @@ class GojekPay
             CURLOPT_RETURNTRANSFER => true
         ));
 
-        if ($post) {
+        if ($post)
+        {
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
 
-        if ($headers) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        if ($headers)
+        {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, self::buildHeaders());
         }
 
         $result = curl_exec($ch);
         curl_close($ch);
         return $result;
     }
-
-    public function getResponse($response, $key)
-    {
-        $json = json_decode($response, true);
-        return $json['data'][$key];
-    }
 }
+
