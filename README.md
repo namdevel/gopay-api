@@ -8,6 +8,8 @@
 
 Compliant with the june 06, 2021 Gojek API update.
 
+:coffee: Buy Me a Coffee : https://trakteer.id/namdevel
+
 Features
 ------------
 - [x] LoginRequest
