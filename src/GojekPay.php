@@ -4,7 +4,7 @@ namespace Namdevel;
  * [Gojek] Gopay Api PHP Class (Un-Official)
  * Author : namdevel <https://github.com/namdevel>
  * Created at 22-04-2020 14:26
- * Last Modified at 06-06-2021 02:37
+ * Last Modified at 08-09-2021 08:24
  */
 class GojekPay
 {
@@ -110,7 +110,7 @@ class GojekPay
         return self::getResponse(self::isGojek($phoneNumber), 'qr_id');
     }
     
-    public function transferGopay($phoneNumber, $amount, $pin)
+    public function transferGopay($phoneNumber, int $amount, $pin)
     {
         self::setPinGojek($pin);
         $payload = array(
@@ -136,7 +136,7 @@ class GojekPay
         return self::Request(self::API_CUSTOMER . "/v1/banks?type=transfer&show_withdrawal_block_status=false", false, true);
     }
     
-    public function transferBank($bankCode, $bankNumber, $amount, $pin)
+    public function transferBank($bankCode, $bankNumber, int $amount, $pin)
     {
         self::setIdKey();
         $bankAccountName = self::getResponse(self::isBank($bankCode, $bankNumber), 'account_name');
