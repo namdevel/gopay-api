@@ -16,11 +16,11 @@ class GojekPay
     const appId = 'com.go-jek.ios';
     const phoneModel = 'Apple, iPhone XS Max';
     const phoneMake = 'Apple';
-    const osDevice = 'iOS, 14.4.2';
+    const osDevice = 'iOS, 14.8.1';
     const xPlatform = 'iOS';
-    const appVersion = '4.20.1';
+    const appVersion = '4.34.0';
     const gojekCountryCode = 'ID';
-    const userAgent = 'Gojek/4.20.1 (com.go-jek.ios; build:15832942; iOS 14.4.2) Alamofire/4.20.1';
+    const userAgent = 'Gojek/4.34.0 (com.go-jek.ios; build:22264304; iOS 14.8.1) NetworkSDK/1.1.0';
     
     private $authToken, $uniqueId, $sessionId, $pin, $idKey;
     
