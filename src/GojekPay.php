@@ -11,6 +11,7 @@ class GojekPay
     const API_URL = 'https://api.gojekapi.com';
     const API_GOID = 'https://goid.gojekapi.com';
     const API_CUSTOMER = 'https://customer.gopayapi.com';
+	
     const clientId = 'gojek:consumer:app';
     const clientSecret = 'pGwQ7oi8bKqqwvid09UrjqpkMEHklb';
     const appId = 'com.go-jek.ios';
@@ -18,9 +19,9 @@ class GojekPay
     const phoneMake = 'Apple';
     const osDevice = 'iOS, 14.8.1';
     const xPlatform = 'iOS';
-    const appVersion = '4.34.0';
+    const appVersion = '4.38.1';
     const gojekCountryCode = 'ID';
-    const userAgent = 'Gojek/4.34.0 (com.go-jek.ios; build:22264304; iOS 14.8.1) NetworkSDK/1.1.0';
+    const userAgent = 'Gojek/4.38.1 (com.go-jek.ios; build:24785490; iOS 14.4.0) Alamofire/4.38.1';
     
     private $authToken, $uniqueId, $sessionId, $pin, $idKey;
     
