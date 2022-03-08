@@ -9,4 +9,4 @@ $gopay = new GojekPay($access_token);
 @ get History Transactions
 return @type json
 */
-echo $gopay->getHistory();
+echo $gopay->getTransactionHistory();
