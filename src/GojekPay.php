@@ -56,7 +56,7 @@ class GojekPay
             'magic_link_ref' => null,
             'phone_number' => self::formatPhone($phoneNumber)
         );
-        return self::Request(self::API_GOID . '/goid/login/request', $payload, true);
+        return self::Request("POST", self::API_GOID . '/goid/login/request', $payload, true);
     }
 
     public function getAuthToken($otpToken, $otpCode)
@@ -71,7 +71,12 @@ class GojekPay
             'grant_type' => 'otp'
         );
 
-        return self::Request(self::API_GOID . '/goid/token', $payload, true);
+        return self::Request("POST", self::API_GOID . '/goid/token', $payload, true);
+    }
+
+    public function logout()
+    {
+        return self::Request("DELETE", self::API_GOID . "/goid/token", false, true);
     }
 
     public function getTransactionHistory($page = 1, $limit = 20)
@@ -132,7 +137,7 @@ class GojekPay
                 'id_type' => 'GOPAY_QR_ID'
             )
         );
-        return self::Request(self::API_CUSTOMER . '/v1/funds/transfer', $payload, true);
+        return self::Request("POST", self::API_CUSTOMER . '/v1/funds/transfer', $payload, true);
     }
 
     public function getBankList()
@@ -153,7 +158,7 @@ class GojekPay
             'pin' => "$pin",
             'type' => 'transfer'
         );
-        return self::Request(self::API_CUSTOMER . '/v1/withdrawals', $payload, true);
+        return self::Request("POST", self::API_CUSTOMER . '/v1/withdrawals', $payload, true);
     }
 
     public function transferBankDetail($requestId)
@@ -219,7 +224,7 @@ class GojekPay
         return $json['data'][$key];
     }
 
-    protected function Request($url, $post = false, $headers = false)
+    protected function Request($type = "GET", $url, $post = false, $headers = false)
     {
         $ch = curl_init();
 
@@ -228,8 +233,9 @@ class GojekPay
             CURLOPT_RETURNTRANSFER => true
         ));
 
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $type);
+
         if ($post) {
-            curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
 
