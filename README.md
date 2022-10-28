@@ -32,6 +32,7 @@ Features
 - [x] paylaterProfile
 - [x] transferBankDetail
 - [x] goClub Membership
+- [x] Logout
 
 License
 ------------
