@@ -21,9 +21,10 @@ class GojekPay
     const phoneMake = 'Apple';
     const osDevice = 'iOS, 15.6.1';
     const xPlatform = 'iOS';
-    const appVersion = '4.54.0';
-    const gojekCountryCode = 'id_ID';
-    const userAgent = 'Gojek/4.54.0 (com.go-jek.ios; build:48016027; iOS 15.6.1) NetworkSDK/1.3.2';
+    const appVersion = '4.55.0';
+    const gojekCountryCode = 'ID';
+    const gojekUserLocale = 'id_ID';
+    const userAgent = 'Gojek/4.55.0 (com.go-jek.ios; build:50783517; iOS 15.6.1) NetworkSDK/1.3.2';
 
     private $authToken, $uniqueId, $sessionId, $pin, $idKey;
 
@@ -81,37 +82,37 @@ class GojekPay
 
     public function getTransactionHistory($page = 1, $limit = 20)
     {
-        return self::Request(self::API_CUSTOMER . "/v1/users/transaction-history?page={$page}&limit={$limit}", false, true);
+        return self::Request("GET" ,self::API_CUSTOMER . "/v1/users/transaction-history?page={$page}&limit={$limit}", false, true);
     }
 
     public function getBalance()
     {
-        return self::Request(self::API_CUSTOMER . "/v1/payment-options/balances", false, true);
+        return self::Request("GET" ,self::API_CUSTOMER . "/v1/payment-options/balances", false, true);
     }
 
     public function getProfile()
     {
-        return self::Request(self::API_URL . "/gojek/v2/customer", false, true);
+        return self::Request("GET" ,self::API_URL . "/gojek/v2/customer", false, true);
     }
 
     public function goClubMembership()
     {
-        return self::Request(self::API_URL . "/goclub/v1/membership", false, true);
+        return self::Request("GET" ,self::API_URL . "/goclub/v1/membership", false, true);
     }
 
     public function paylaterProfile()
     {
-        return self::Request(self::API_URL . "/paylater/v1/user/profile", false, true);
+        return self::Request("GET" ,self::API_URL . "/paylater/v1/user/profile", false, true);
     }
 
     public function kycStatus()
     {
-        return self::Request(self::API_CUSTOMER . "/v1/users/kyc/status", false, true);
+        return self::Request("GET" ,self::API_CUSTOMER . "/v1/users/kyc/status", false, true);
     }
 
     public function isGojek($phoneNumber)
     {
-        return self::Request(self::API_CUSTOMER . "/v1/users/p2p-profile?phone_number=" . urlencode($phoneNumber) . "", false, true);
+        return self::Request("GET" ,self::API_CUSTOMER . "/v1/users/p2p-profile?phone_number=" . urlencode($phoneNumber) . "", false, true);
     }
 
     public function getQrid($phoneNumber)
@@ -142,7 +143,7 @@ class GojekPay
 
     public function getBankList()
     {
-        return self::Request(self::API_CUSTOMER . "/v1/banks?type=transfer&show_withdrawal_block_status=false", false, true);
+        return self::Request("GET" ,self::API_CUSTOMER . "/v1/banks?type=transfer&show_withdrawal_block_status=false", false, true);
     }
 
     public function transferBank($bankCode, $bankNumber, int $amount, $pin)
@@ -163,12 +164,12 @@ class GojekPay
 
     public function transferBankDetail($requestId)
     {
-        return self::Request(self::API_CUSTOMER . "/v1/withdrawals/detail?request_id={$requestId}", false, true);
+        return self::Request("GET" ,self::API_CUSTOMER . "/v1/withdrawals/detail?request_id={$requestId}", false, true);
     }
 
     public function isBank($bankCode, $bankNumber)
     {
-        return self::Request(self::API_CUSTOMER . "/v1/bank-accounts/validate?bank_code={$bankCode}&account_number={$bankNumber}", false, true);
+        return self::Request("GET" ,self::API_CUSTOMER . "/v1/bank-accounts/validate?bank_code={$bankCode}&account_number={$bankNumber}", false, true);
     }
 
     protected function formatPhone($phoneNumber, $areacode = '')
@@ -197,7 +198,8 @@ class GojekPay
             'x-platform: ' . self::xPlatform,
             'x-appversion: ' . self::appVersion,
             'x-signature: 1001',
-            'x-user-locale: ' . self::gojekCountryCode,
+            'Gojek-Country-Code: '.self::gojekCountryCode, //NEW UPDATE GOPAY PARAMETER - PrinceRay
+            'x-user-locale: ' . self::gojekUserLocale,
             'accept: */*',
             'content-type: application/json',
             'x-user-type: customer'
