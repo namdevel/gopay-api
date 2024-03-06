@@ -16,22 +16,22 @@ class GojekPay
 
     const clientId = 'gojek:consumer:app';
     const clientSecret = 'pGwQ7oi8bKqqwvid09UrjqpkMEHklb';
-    const appId = 'com.go-jek.ios';
-    const phoneModel = 'Apple, iPhone XS Max';
-    const phoneMake = 'Apple';
-    const osDevice = 'iOS, 15.6.1';
-    const xPlatform = 'iOS';
-    const appVersion = '4.55.0';
+    const appId = 'com.gojek.app';
+    const phoneModel = 'samsung,SM-N935F';
+    const phoneMake = 'samsung';
+    const osDevice = 'Android,9';
+    const xPlatform = 'Android';
+    const appVersion = '4.83.1';
     const gojekCountryCode = 'ID';
     const gojekUserLocale = 'id_ID';
-    const userAgent = 'Gojek/4.55.0 (com.go-jek.ios; build:50783517; iOS 15.6.1) NetworkSDK/1.3.2';
+    const userAgent = 'okhttp/4.10.0';
 
     private $authToken, $uniqueId, $sessionId, $pin, $idKey;
 
     public function __construct($authToken = false)
     {
-        $this->sessionId = '786C2BF4-A6A1-498D-8906-1B8064D58156'; // generated from self::uuidv4();
-        $this->uniqueId  = '0D8C6014-F646-43A8-ADFB-F9A2416C1B28'; // generated from self::uuidv4();
+        $this->sessionId = 'b7b51d44-3efe-4073-b696-7562d7738c97'; // generated from self::uuidv4();
+        $this->uniqueId  = '9590a554ea3e511d'; // generated from self::uuidv4();
 
         if ($authToken) {
             $this->authToken = $authToken;
