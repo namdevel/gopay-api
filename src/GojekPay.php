@@ -21,10 +21,10 @@ class GojekPay
     const phoneMake = 'Apple';
     const osDevice = 'iOS, 15.6.1';
     const xPlatform = 'iOS';
-    const appVersion = '4.55.0';
+    const appVersion = '4.88.0';
     const gojekCountryCode = 'ID';
     const gojekUserLocale = 'id_ID';
-    const userAgent = 'Gojek/4.55.0 (com.go-jek.ios; build:50783517; iOS 15.6.1) NetworkSDK/1.3.2';
+    const userAgent = 'Gojek/122076431 CFNetwork/1404.0.5 Darwin/22.3.0';
 
     private $authToken, $uniqueId, $sessionId, $pin, $idKey;
 
